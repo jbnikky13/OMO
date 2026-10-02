@@ -143,3 +143,73 @@ html,body{background:#07080b}body{font-family:Inter,ui-sans-serif,system-ui,sans
   .game.ta-home .gameScene{height:420px}
   .game.ta-home .quickActions button{min-height:76px;font-size:24px}
 }
+
+
+/* OMO SIM UI — mobile game-first presentation */
+.gameHud{height:70px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:12px!important}
+.gameHud .hudPlayer{display:flex;align-items:center;gap:9px;min-width:0}
+.gameHud .hudAvatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(145deg,#2b3039,#171a20);border:1px solid rgba(255,255,255,.12);font-size:24px;box-shadow:0 6px 18px #0007}
+.gameHud .eyebrow{font-size:8px;margin-bottom:1px}
+.gameHud h1{font-size:18px!important;margin:0 0 2px!important;letter-spacing:-.02em}
+.gameHud .muted{font-size:9px!important;white-space:nowrap}
+.gameHud .hudMoney{text-align:right}
+.gameHud .hudMoney .cash{font-size:19px!important;line-height:1}
+.gameHud .hudMoney .muted{font-size:8px!important}
+.hudMeters{position:fixed;top:74px;left:50%;transform:translateX(-50%);z-index:31;width:min(1120px,100%);display:flex;justify-content:flex-end;gap:6px;padding:0 28px;pointer-events:none}
+.hudMeter{width:82px;height:24px;display:flex;align-items:center;gap:4px;padding:4px 6px;border-radius:9px;background:rgba(8,10,14,.76);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(12px);font-size:10px}
+.hudMeter i{height:4px;flex:1;background:#252932;border-radius:5px;overflow:hidden}.hudMeter em{display:block;height:100%;background:linear-gradient(90deg,#b98029,#f2cf73);border-radius:5px}
+.hudMeter b{font-size:9px;color:#eee}
+.hudMoves{height:24px;min-width:55px;display:flex;align-items:center;justify-content:center;gap:4px;padding:4px 7px;border-radius:9px;background:rgba(8,10,14,.76);border:1px solid rgba(231,190,95,.2);backdrop-filter:blur(12px)}
+.hudMoves strong{font-size:11px;color:#f0c967}.hudMoves span{font-size:7px;color:#aaa;letter-spacing:.08em}
+.gameWorld{position:relative;margin:0 -2px}
+.worldTop{position:absolute;z-index:8;left:14px;right:14px;top:14px;display:flex;justify-content:space-between;align-items:flex-start;pointer-events:none}
+.worldTitle{display:flex;flex-direction:column;padding:9px 11px;border-radius:12px;background:rgba(5,8,10,.72);border:1px solid rgba(255,255,255,.08);backdrop-filter:blur(10px);box-shadow:0 8px 25px #0005}
+.worldTitle b{font-size:9px;letter-spacing:.15em;color:#f0ca70}.worldTitle span{font-size:9px;color:#a5a7a7;margin-top:3px}.worldWeek{padding:8px 10px;border-radius:10px;background:rgba(5,8,10,.7);border:1px solid rgba(255,255,255,.08);font-size:8px;letter-spacing:.12em;color:#cfc8b9}
+.game.ta-home .gameWorld{margin-top:0}
+.game.ta-home .gameScene.worldMap{height:calc(100svh - 235px)!important;min-height:430px;max-height:650px;margin:0;border:0;border-radius:0 0 26px 26px;background:linear-gradient(180deg,#15271f,#0f1e19)!important;box-shadow:inset 0 -140px 160px rgba(0,0,0,.45),inset 0 40px 80px rgba(0,0,0,.18)}
+.game.ta-home .mapGrid{background-size:34px 34px;opacity:.22}
+.game.ta-home .mapWater{background:linear-gradient(145deg,#16414d,#102f3b);box-shadow:inset 0 0 40px #0005}
+.game.ta-home .mapRoad{background:#30383a;border-color:rgba(255,255,255,.07);box-shadow:inset 0 4px 12px #0005}
+.game.ta-home .mapRoad:after{border-top-color:rgba(238,208,111,.6)}
+.game.ta-home .mapLot{appearance:none;-webkit-appearance:none;color:#fff;width:108px;height:94px;border:1px solid rgba(255,255,255,.14);border-radius:18px;background:linear-gradient(145deg,rgba(30,39,38,.96),rgba(15,21,20,.96));box-shadow:0 14px 28px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.05);font:inherit;cursor:pointer}
+.game.ta-home .mapLot:hover{transform:translateY(-5px) scale(1.025);border-color:rgba(239,198,105,.5);box-shadow:0 18px 34px rgba(0,0,0,.38),0 0 20px rgba(226,180,76,.08)}
+.game.ta-home .mapLot:active{transform:translateY(-1px) scale(.98)}
+.game.ta-home .mapHouse{font-size:40px;filter:drop-shadow(0 5px 4px #0006)}
+.game.ta-home .mapLot small{font-size:8px;font-weight:900;letter-spacing:.18em}
+.game.ta-home .workLot{background:linear-gradient(145deg,rgba(35,43,51,.98),rgba(15,20,25,.98))}
+.game.ta-home .marketLot{background:linear-gradient(145deg,rgba(42,43,28,.98),rgba(19,20,15,.98))}
+.game.ta-home .bankLot{background:linear-gradient(145deg,rgba(35,40,48,.98),rgba(15,18,22,.98))}
+.game.ta-home .parkLot{background:linear-gradient(145deg,rgba(24,58,43,.98),rgba(13,31,23,.98))}
+.game.ta-home .mapPlayer{font-size:34px;filter:drop-shadow(0 9px 7px #0008)}
+.game.ta-home .mapPlayer b{font-size:9px;padding:4px 8px;border-radius:7px;background:#090b0d;color:#f1ce79;box-shadow:0 5px 14px #0007}
+.sceneHint{position:absolute;z-index:10;left:50%;bottom:92px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:9px 12px;border-radius:12px;background:rgba(5,8,10,.72);border:1px solid rgba(255,255,255,.09);backdrop-filter:blur(10px);box-shadow:0 10px 25px #0005;white-space:nowrap;animation:simHint 3s ease-in-out infinite}
+.sceneHint span{font-size:16px}.sceneHint b{font-size:10px}.sceneHint small{font-size:9px;color:#92969a}
+@keyframes simHint{0%,100%{opacity:.7;transform:translateX(-50%) translateY(0)}50%{opacity:1;transform:translateX(-50%) translateY(-3px)}}
+.gameObjective{position:relative;z-index:14;margin:-42px 14px 10px;padding:13px 15px;border-radius:15px;background:linear-gradient(100deg,rgba(17,19,24,.96),rgba(11,14,18,.9));border:1px solid rgba(231,190,95,.16);box-shadow:0 12px 30px #0008;backdrop-filter:blur(15px)}
+.gameObjective>span{display:block;font-size:8px;letter-spacing:.15em;color:#d5ad5b;font-weight:900}.gameObjective strong{display:block;margin-top:4px;font-size:15px}.gameObjective small{display:block;margin-top:4px;color:#8f949a;font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gameActions{position:relative;z-index:15;display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin:0 14px 14px}
+.gameActions button{min-height:72px;padding:10px 6px;border-radius:15px;border:1px solid rgba(255,255,255,.09);background:linear-gradient(145deg,#191d24,#0f1217);color:#eeeae2;box-shadow:0 8px 20px #0005;cursor:pointer;transition:.15s ease}
+.gameActions button span{display:block;font-size:22px;line-height:1.1}.gameActions button b{display:block;margin-top:5px;font-size:9px;letter-spacing:.08em}.gameActions button small{display:block;margin-top:3px;font-size:8px;color:#888d94}.gameActions button:hover{transform:translateY(-3px);border-color:rgba(234,194,102,.42)}.gameActions .actionWork{background:linear-gradient(145deg,#392b15,#18140e);border-color:rgba(226,181,77,.35)}
+.game.ta-home>.actions{display:none!important}
+.game:not(.ta-home) .gameWorld,.game:not(.ta-home) .gameObjective,.game:not(.ta-home) .gameActions{display:none}
+.game:not(.ta-home) .hudMeters{display:none}
+.game:not(.ta-home) .gameHud{margin-bottom:0}
+.game.ta-home .bottomNav{z-index:40}
+.game.ta-home{padding-top:78px!important}
+@media(max-width:650px){
+ .game.ta-home{padding:70px 0 96px!important}
+ .game.ta-home .gameHud{padding:9px 13px!important;min-height:62px}
+ .game.ta-home .gameHud .hudAvatar{width:37px;height:37px;font-size:21px}
+ .game.ta-home .gameHud h1{font-size:17px!important}
+ .game.ta-home .hudMeters{top:67px;padding:0 10px;justify-content:flex-start;left:10px;transform:none;width:auto}
+ .game.ta-home .hudMeter{width:70px}.game.ta-home .hudMoves{min-width:50px}
+ .game.ta-home .gameScene.worldMap{height:calc(100svh - 245px)!important;min-height:390px;border-radius:0!important}
+ .game.ta-home .mapLot{width:84px;height:76px;border-radius:15px}
+ .game.ta-home .mapHouse{font-size:31px}
+ .game.ta-home .homeLot{left:7%;top:12%}.game.ta-home .workLot{left:55%;top:10%}.game.ta-home .marketLot{left:65%;top:63%}.game.ta-home .bankLot{left:30%;top:64%}.game.ta-home .parkLot{left:10%;top:63%}
+ .game.ta-home .sceneHint{bottom:74px;max-width:calc(100% - 40px)}
+ .game.ta-home .sceneHint small{display:none}
+ .gameObjective{margin:-34px 10px 8px;padding:11px 13px}
+ .gameObjective strong{font-size:14px}.gameActions{grid-template-columns:repeat(4,1fr);gap:5px;margin:0 10px 10px}.gameActions button{min-height:67px;border-radius:13px;padding:8px 3px}.gameActions button span{font-size:20px}.gameActions button b{font-size:8px}.gameActions button small{display:none}
+}
+@media(max-width:380px){.gameActions button{min-height:62px}.game.ta-home .mapLot{width:76px;height:68px}.game.ta-home .mapHouse{font-size:27px}.game.ta-home .sceneHint{padding:7px 9px}.game.ta-home .sceneHint b{font-size:9px}}
