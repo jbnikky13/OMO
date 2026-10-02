@@ -1,0 +1,80 @@
+name: Integrate OMO game loop
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  integrate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Integrate game loop into page
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path("app/page.tsx")
+          s = p.read_text()
+          marker = 'import GameLoop from "./components/GameLoop";'
+          if marker in s:
+              print("GameLoop already integrated")
+              raise SystemExit(0)
+
+          s = s.replace(
+              'import { useEffect, useState } from "react";',
+              'import { useEffect, useState } from "react";\n' + marker,
+              1
+          )
+
+          idx = s.find("return (")
+          if idx < 0:
+              raise SystemExit("Could not find page return block")
+
+          open_idx = s.find("\n", idx)
+          if open_idx < 0:
+              raise SystemExit("Could not find return opening line")
+
+          insertion = '\n      <GameLoop />\n'
+          s = s[:open_idx + 1] + insertion + s[open_idx + 1:]
+          p.write_text(s)
+          PY
+
+      - name: Add game-loop styles
+        run: |
+          cat >> app/globals.css <<'CSS'
+
+          .omo-game-loop{margin:18px auto;max-width:980px;border:1px solid rgba(255,255,255,.1);border-radius:24px;padding:20px;background:linear-gradient(145deg,rgba(20,25,35,.98),rgba(10,13,20,.98));box-shadow:0 20px 60px rgba(0,0,0,.22)}
+          .omo-loop-head{display:flex;justify-content:space-between;gap:20px;align-items:flex-start}
+          .omo-loop-head h2{margin:4px 0;font-size:clamp(24px,5vw,40px)}
+          .omo-loop-head p{margin:0;opacity:.65}
+          .omo-kicker{font-size:11px;letter-spacing:.16em;font-weight:800;opacity:.6}
+          .omo-loop-cash{font-size:20px;font-weight:800;white-space:nowrap}
+          .omo-story-card{margin-top:18px;padding:22px;border-radius:20px;background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.08)}
+          .omo-story-card h3{font-size:clamp(20px,4vw,30px);margin:8px 0}
+          .omo-story-card p{opacity:.72}
+          .omo-choice-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+          .omo-choice{min-height:120px;text-align:left;padding:16px;border-radius:16px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:inherit;cursor:pointer}
+          .omo-choice:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.25)}
+          .omo-choice strong{display:block;font-size:16px;margin-bottom:7px}
+          .omo-choice span{font-size:13px;opacity:.65;line-height:1.45}
+          .omo-confirm{display:flex;gap:10px;margin-top:18px}
+          .omo-primary,.omo-secondary{border:0;border-radius:12px;padding:12px 16px;font-weight:800;cursor:pointer}
+          .omo-primary{background:#fff;color:#080a0e}
+          .omo-secondary{background:rgba(255,255,255,.08);color:inherit}
+          .omo-notice{margin-top:14px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.05);font-size:13px}
+          @media(max-width:700px){.omo-loop-head{flex-direction:column}.omo-loop-cash{font-size:18px}.omo-choice-grid{grid-template-columns:1fr}.omo-choice{min-height:auto}.omo-confirm{flex-direction:column}}
+          CSS
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.tsx app/globals.css
+          git diff --cached --quiet || git commit -m "feat: turn OMO into an interactive life game loop"
+          git push
