@@ -32,16 +32,16 @@ jobs:
               1
           )
 
-          idx = s.find("return (")
-          if idx < 0:
-              raise SystemExit("Could not find page return block")
+          if "</main>" in s:
+              s = s.replace("</main>", "<GameLoop />\n</main>", 1)
+          elif "<main" in s:
+              pos = s.find(">", s.find("<main"))
+              if pos < 0:
+                  raise SystemExit("Could not find main opening tag")
+              s = s[:pos+1] + "\n<GameLoop />" + s[pos+1:]
+          else:
+              raise SystemExit("Could not find main container")
 
-          open_idx = s.find("\n", idx)
-          if open_idx < 0:
-              raise SystemExit("Could not find return opening line")
-
-          insertion = '\n      <GameLoop />\n'
-          s = s[:open_idx + 1] + insertion + s[open_idx + 1:]
           p.write_text(s)
           PY
 
