@@ -308,3 +308,9 @@ linear-gradient(155deg,rgba(28,48,54,.96),rgba(16,25,31,.98) 48%,rgba(24,39,31,.
 .interactionPrompt>span{font-size:21px!important}.interactionPrompt div{min-width:0!important}.interactionPrompt b{display:block!important;font-size:9px!important;letter-spacing:.09em!important}.interactionPrompt small{display:block!important;color:#8f969e!important;font-size:8px!important;margin-top:2px!important}
 .interactionPrompt button{border:1px solid rgba(230,191,92,.45)!important;border-radius:9px!important;padding:8px 9px!important;background:#2a2110!important;color:#f2cc73!important;font-size:8px!important;font-weight:900!important;letter-spacing:.08em!important}
 @media(max-width:650px){.interactionPrompt{top:56px!important;max-width:calc(100% - 110px)!important}.interactionPrompt button{padding:7px 8px!important}}
+
+.mapNpc{border:0!important;background:transparent!important;padding:0!important;width:auto!important;height:auto!important;cursor:pointer!important;pointer-events:auto!important}
+.mapNpc b{display:block!important;margin-top:2px!important;padding:2px 5px!important;border-radius:6px!important;background:rgba(5,7,9,.78)!important;color:#eee!important;font-size:7px!important;opacity:0!important;transition:.15s!important}
+.mapNpc:hover b,.mapNpc.nearby b{opacity:1!important}.mapNpc.nearby img{filter:drop-shadow(0 0 8px rgba(238,191,81,.65))!important;transform:scale(1.15)!important}
+.mapNpc.nearby{animation:omoNpcNear .7s ease-in-out infinite alternate!important}
+@keyframes omoNpcNear{from{transform:translateY(0)}to{transform:translateY(-4px)}}
