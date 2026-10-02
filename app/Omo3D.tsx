@@ -1,0 +1,45 @@
+"use client";
+import {useEffect,useRef,useState} from "react";
+import * as THREE from "three";
+
+type Obj={id:string;x:number;z:number;sx:number;sz:number;label:string;emoji:string;dur:number;eff:any;cost?:number;pay?:(s:any)=>number;skill?:number;power?:boolean};
+const O:Obj[]=[
+{id:"bed",x:-4,z:-3,sx:-2.3,sz:-2.2,label:"Sleep",emoji:"🛏️",dur:420,eff:{energy:90,hunger:-12}},
+{id:"pc",x:0,z:-4,sx:0,sz:-2.7,label:"Freelance",emoji:"💻",dur:120,eff:{energy:-18,hunger:-10,fun:-10},pay:s=>2500+s.skill*40,skill:2,power:true},
+{id:"food",x:4.5,z:-4,sx:4.1,sz:-2.5,label:"Eat jollof ₦800",emoji:"🍲",dur:30,eff:{hunger:45},cost:800},
+{id:"shower",x:5,z:.2,sx:4.6,sz:.2,label:"Bathe",emoji:"🚿",dur:25,eff:{hygiene:70}},
+{id:"tv",x:-5.5,z:1.5,sx:-3.4,sz:1.5,label:"Watch TV",emoji:"📺",dur:90,eff:{fun:50,energy:-5},power:true},
+{id:"phone",x:0,z:3.5,sx:0,sz:2.3,label:"Call friends ₦200",emoji:"📱",dur:45,eff:{social:45,fun:10},cost:200},
+{id:"door",x:5.8,z:3.2,sx:4.7,sz:3.2,label:"Hustle by danfo ₦800",emoji:"🚌",dur:480,eff:{energy:-45,hunger:-25,hygiene:-20,fun:-15,social:10},pay:s=>10000+s.skill*60,cost:800,skill:1}
+];
+const needs=["hunger","energy","hygiene","fun","social"];
+const fresh=()=>({t:420,day:1,cash:50000,skill:5,x:0,z:.5,q:[],cur:null,out:0,speed:1,needs:{hunger:80,energy:85,hygiene:80,fun:70,social:60},log:["Your first flat in Lagos. Rent is ₦25,000 every Monday."],over:""});
+export default function Omo3D(){
+ const host=useRef<HTMLDivElement>(null),[hud,setHud]=useState<any>(fresh());
+ useEffect(()=>{
+  const el=host.current;if(!el)return;let S:any;try{S=JSON.parse(localStorage.getItem("omo-3d-v3")||"null")||fresh()}catch{S=fresh()}
+  const r=new THREE.WebGLRenderer({antialias:true});r.setPixelRatio(Math.min(devicePixelRatio,2));r.shadowMap.enabled=true;el.appendChild(r.domElement);
+  const scene=new THREE.Scene(),cam=new THREE.PerspectiveCamera(42,1,.1,100);cam.position.set(0,13.5,12.5);cam.lookAt(0,.4,0);
+  scene.add(new THREE.AmbientLight(0xffffff,.82));const sun=new THREE.DirectionalLight(0xfff0d0,.95);sun.position.set(-6,12,8);sun.castShadow=true;scene.add(sun);
+  const B=(w:number,h:number,d:number)=>new THREE.BoxGeometry(w,h,d),groups:any={};
+  const mk=(g:any,c:number,p:any,parent:any=scene,o:any={})=>{const m=new THREE.Mesh(g,new THREE.MeshStandardMaterial({color:c,roughness:.8,...o}));m.position.set(...p);m.castShadow=m.receiveShadow=true;parent.add(m);return m};
+  mk(B(12.4,.2,10.4),0x704d37,[0,-.1,0]);mk(B(12.6,3,.3),0x2e2848,[0,1.5,-5.15]);mk(B(.3,3,10.4),0x2a2540,[-6.15,1.5,0]);mk(B(.3,3,10.4),0x2a2540,[6.15,1.5,0]);mk(new THREE.CylinderGeometry(2,2,.03,32),0xb04a3a,[0,.02,.6]);
+  const label=(t:string)=>{const c=document.createElement("canvas");c.width=256;c.height=64;const x=c.getContext("2d")!;x.fillStyle="#14121add";x.fillRect(0,8,256,48);x.fillStyle="#f4efe6";x.font="bold 22px sans-serif";x.textAlign="center";x.fillText(t,128,38);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),depthTest:false}));s.scale.set(2.8,.7,1);return s};
+  O.forEach(o=>{const g=new THREE.Group();groups[o.id]=g;scene.add(g);g.position.set(o.x,0,o.z);if(o.id==="bed"){mk(B(2.2,.45,3.2),0x5b3a29,[0,.25,0],g);mk(B(2,.25,3),0xd9d2c3,[0,.6,0],g)}else if(o.id==="pc"){mk(B(2.6,.12,1.2),0x6b4a32,[0,1,0],g);mk(B(.8,.55,.05),0x111111,[0,1.4,-.2],g,{emissive:0x3a8cff,emissiveIntensity:.5})}else if(o.id==="food")mk(B(1.4,2.8,1.2),0xe9eef2,[0,1.4,0],g);else if(o.id==="shower"){mk(B(1.9,.15,1.9),0x9fb4c4,[0,.08,0],g);mk(B(.05,2.6,1.9),0xaad4ff,[.9,1.4,0],g,{transparent:true,opacity:.3})}else if(o.id==="tv"){mk(B(.5,.8,2.2),0x2a2420,[0,.4,0],g);mk(B(.1,1.2,2),0x111111,[.25,1.5,0],g,{emissive:0x4466aa,emissiveIntensity:.5});mk(B(1.4,.45,2.4),0x7a2e3a,[2.1,.3,0],g)}else if(o.id==="phone")mk(new THREE.CylinderGeometry(.6,.6,.08,16),0x6b4a32,[0,1,0],g);else mk(B(.25,3,1.8),0x4a3322,[0,1.5,0],g);const l=label(o.emoji+" "+o.label);l.position.set(o.x,o.id==="door"?4:3,o.z);scene.add(l);g.traverse((m:any)=>m.userData.id=o.id)});
+  const bola=new THREE.Group();scene.add(bola);mk(new THREE.CylinderGeometry(.32,.38,.9,10),0xf2b84b,[0,1.25,0],bola);mk(new THREE.SphereGeometry(.3,14,12),0x8a5a3c,[0,1.95,0],bola);mk(new THREE.SphereGeometry(.31,12,8,0,Math.PI*2,0,Math.PI/2),0x1a1410,[0,2,0],bola);
+  const ring=new THREE.Mesh(new THREE.RingGeometry(.55,.75,24),new THREE.MeshBasicMaterial({color:0xf2b84b,transparent:true,opacity:.8}));ring.rotation.x=-Math.PI/2;ring.position.y=.04;scene.add(ring);
+  const find=(id:string)=>O.find(o=>o.id===id)!;const say=(m:string)=>S.log=[m,...S.log].slice(0,5);const queue=(id:string)=>{if(S.q.length<3)S.q.push(id)};
+  const start=()=>{if(!S.q.length)return;const o=find(S.q.shift());if(o.power&&S.out){say("💡 NEPA took light.");return}if(o.cost&&S.cash<o.cost){say("Not enough cash.");return}S.cash-=o.cost||0;S.cur={id:o.id,left:o.dur}};
+  const finish=()=>{const o=find(S.cur.id);if(o.pay){const p=o.pay(S);S.cash+=p;say("✅ "+o.label+": earned ₦"+Math.round(p).toLocaleString("en-NG"))}else say("✅ Done: "+o.label);S.skill+=o.skill||0;S.cur=null};
+  const tick=()=>{S.t++;if(S.t>=1440){S.t=0;S.day++;if((S.day-1)%7===0){if(S.cash>=25000){S.cash-=25000;say("🏠 Rent paid: ₦25,000")}else S.over="Evicted. You could not pay ₦25,000 rent."}}const sleep=S.cur?.id==="bed";S.needs.hunger-=sleep?.02:.07;if(!sleep)S.needs.energy-=.05;S.needs.hygiene-=.045;S.needs.fun-=.06;S.needs.social-=.04;if(S.cur){const o=find(S.cur.id);Object.keys(o.eff).forEach(k=>S.needs[k]+=o.eff[k]/o.dur);if(--S.cur.left<=0)finish()}needs.forEach(k=>S.needs[k]=Math.max(0,Math.min(100,S.needs[k])));if(S.out>0&&--S.out===0)say("💡 Light is back.");else if(!S.out&&Math.random()<.0003){S.out=180;say("💡 NEPA took light!");}};
+  const walk=(dt:number)=>{if(S.cur||!S.q.length)return;const o=find(S.q[0]),dx=o.sx-S.x,dz=o.sz-S.z,d=Math.hypot(dx,dz);if(d<.15){start();return}const sp=Math.min(d,4.2*dt);S.x+=dx/d*sp;S.z+=dz/d*sp;bola.rotation.y=Math.atan2(dx,dz)};
+  const pointer=(e:PointerEvent)=>{const q=r.domElement.getBoundingClientRect(),p=new THREE.Vector2((e.clientX-q.left)/q.width*2-1,-(e.clientY-q.top)/q.height*2+1),ray=new THREE.Raycaster();ray.setFromCamera(p,cam);const hit=ray.intersectObjects(Object.values(groups),true)[0];if(hit?.object.userData.id)queue(hit.object.userData.id)};
+  r.domElement.addEventListener("pointerdown",pointer);
+  const resize=()=>{const w=el.clientWidth||360,h=Math.round(w*.92);r.setSize(w,h);cam.aspect=w/h;cam.updateProjectionMatrix()};resize();window.addEventListener("resize",resize);
+  let last=performance.now(),acc=0,raf=0;const loop=(now:number)=>{const dt=Math.min(.1,(now-last)/1000);last=now;if(!S.over&&S.speed){acc+=dt*10*S.speed;while(acc>=1){acc--;tick()};walk(dt*S.speed)}bola.visible=S.cur?.id!=="door";bola.position.set(S.x,0,S.z);if(S.cur?.id==="bed"){bola.position.set(-2.3,1.15,-1.1);bola.rotation.x=-Math.PI/2}else bola.rotation.x=0;const target=S.cur?find(S.cur.id):S.q.length?find(S.q[0]):null;ring.visible=!!target;if(target)ring.position.set(target.sx,.04,target.sz);scene.background=new THREE.Color(S.t/60<6||S.t/60>=21?0x080a1c:0x1b1d36);r.render(scene,cam);setHud({...S,needs:{...S.needs},log:[...S.log]});raf=requestAnimationFrame(loop)};raf=requestAnimationFrame(loop);
+  const save=setInterval(()=>{try{localStorage.setItem("omo-3d-v3",JSON.stringify(S))}catch{}},3000);
+  return()=>{cancelAnimationFrame(raf);clearInterval(save);window.removeEventListener("resize",resize);r.domElement.removeEventListener("pointerdown",pointer);r.dispose();el.innerHTML=""};
+ },[]);
+ const h=Math.floor(hud.t/60),m=hud.t%60,avg=needs.reduce((a,k)=>a+hud.needs[k],0)/5,mood=avg>=70?"😄 Happy":avg>=45?"🙂 Okay":avg>=25?"😟 Stressed":"😩 Miserable";
+ return <div className="omo-game-wrap"><div className="omo-hud"><div><b>Bola</b><span>{["Mon","Tue","Wed","Thu","Fri","Sat","Sun"][(hud.day-1)%7]} · Day {hud.day} · {String(h).padStart(2,"0")}:{String(m).padStart(2,"0")}</span></div><strong>₦{Math.round(hud.cash).toLocaleString("en-NG")}</strong></div><div className="omo-needs">{needs.map(k=><div key={k}>{({hunger:"🍲",energy:"⚡",hygiene:"🚿",fun:"🎮",social:"💬"} as any)[k]}<i><b style={{width:hud.needs[k]+"%"}}/></i></div>)}</div><div ref={host} className="omo-canvas"/><div className="omo-status">Mood: {mood} · Skill {hud.skill} · {hud.cur?"Working…":hud.q.length?"Walking…":"Idle"}</div><div className="omo-actions">{[0,1,3,8].map(s=><button key={s} onClick={()=>{try{const x=JSON.parse(localStorage.getItem("omo-3d-v3")||"null");if(x){x.speed=s;localStorage.setItem("omo-3d-v3",JSON.stringify(x));location.reload()}}catch{}}}>{s===0?"⏸":s+"×"}</button>)}</div><div className="omo-log">{hud.log.map((x:string,i:number)=><p key={i}>{x}</p>)}</div>{hud.over&&<div className="omo-over"><div><h2>Game over</h2><p>{hud.over}</p><button onClick={()=>{localStorage.removeItem("omo-3d-v3");location.reload()}}>Start a new life</button></div></div>}</div>
+}
