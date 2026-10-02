@@ -213,3 +213,16 @@ html,body{background:#07080b}body{font-family:Inter,ui-sans-serif,system-ui,sans
  .gameObjective strong{font-size:14px}.gameActions{grid-template-columns:repeat(4,1fr);gap:5px;margin:0 10px 10px}.gameActions button{min-height:67px;border-radius:13px;padding:8px 3px}.gameActions button span{font-size:20px}.gameActions button b{font-size:8px}.gameActions button small{display:none}
 }
 @media(max-width:380px){.gameActions button{min-height:62px}.game.ta-home .mapLot{width:76px;height:68px}.game.ta-home .mapHouse{font-size:27px}.game.ta-home .sceneHint{padding:7px 9px}.game.ta-home .sceneHint b{font-size:9px}}
+
+/* Illustrated OMO world */
+.game.ta-home .mapLot{overflow:visible}
+.game.ta-home .mapLot img{display:block;width:76px;height:63px;object-fit:contain;margin:-2px auto -1px;filter:drop-shadow(0 8px 6px rgba(0,0,0,.4));transition:transform .18s ease,filter .18s ease}
+.game.ta-home .mapLot:hover img{transform:translateY(-4px) scale(1.06);filter:drop-shadow(0 12px 8px rgba(0,0,0,.5))}
+.game.ta-home .mapPlayer img{width:58px;height:82px;object-fit:contain;display:block;filter:drop-shadow(0 9px 6px rgba(0,0,0,.55))}
+.game.ta-home .mapPlayer b{display:block;margin-top:-2px;position:relative}
+.game.ta-home .mapNpc{font-size:24px;filter:drop-shadow(0 5px 4px #0008);animation:npcBob 2.6s ease-in-out infinite}
+.game.ta-home .npc2{animation-delay:-1.3s}
+@keyframes npcBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.game.ta-home .worldMap:after{content:"";position:absolute;inset:auto 0 0;height:130px;background:linear-gradient(transparent,rgba(3,8,7,.72));pointer-events:none}
+.game.ta-home .mapGrid:after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 25% 25%,rgba(239,195,88,.08),transparent 25%),radial-gradient(circle at 78% 30%,rgba(84,153,108,.08),transparent 30%);pointer-events:none}
+@media(max-width:650px){.game.ta-home .mapLot img{width:65px;height:55px}.game.ta-home .mapPlayer img{width:49px;height:70px}}
