@@ -148,7 +148,7 @@ const goals:Goal[]=[
 {id:"skills",title:"Level Up Yourself",description:"Reach 50% skills.",reward:25000,xp:1,check:p=>p.skills>=50},
 {id:"property",title:"Landlord Loading",description:"Own your first property.",reward:50000,xp:2,check:p=>p.properties.length>=1},
 {id:"business",title:"Omo, I Get Company",description:"Start a business.",reward:60000,xp:2,check:p=>!!p.business},
-{id:"contract",title:"Big Client",description:"Complete your first contract.",reward:30000,xp:1,check:p=>p.milestones.includes("contract")||p.milestones.includes("Big Client")},
+{id:"contract",title:"Big Client",description:"Complete your first contract.",reward:30000,xp:1,check:p=>p.properties.length>=1&&p.careerLevel>=2},
 {id:"family",title:"Family Man/Woman",description:"Build a committed relationship or start a family.",reward:30000,xp:1,check:p=>!!p.partner||p.children>0},
 {id:"wealth",title:"₦1 Million Journey",description:"Reach ₦1,000,000 across cash and bank savings.",reward:100000,xp:3,check:p=>p.cash+p.bank>=1000000},
 {id:"reputation",title:"Known Name",description:"Reach 75% reputation.",reward:75000,xp:2,check:p=>p.reputation>=75},
