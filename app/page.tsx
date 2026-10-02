@@ -114,7 +114,7 @@ const trainings:Training[]=[
 type Unlock={id:string;title:string;description:string;req:(p:Player)=>boolean;kind:string};
 const unlocks:Unlock[]=[
 {id:"senior-tech",title:"Senior Career Roles",description:"Career Level 3 and 60% skills unlock higher-tier job offers.",req:p=>p.careerLevel>=3&&p.skills>=60,kind:"career"},
-{id:"specialist-contracts",title:"Specialist Contracts",description:"50% skills and a specialisation unlock higher-value contracts.",req:p=>p.skills>=50&&!!specialization,kind:"contract"},
+{id:"specialist-contracts",title:"Specialist Contracts",description:"50% skills and a specialisation unlock higher-value contracts.",req:p=>p.skills>=50&&p.careerLevel>=2,kind:"contract"},
 {id:"company-level2",title:"Company Expansion",description:"A Level 2 company can access larger business opportunities.",req:p=>!!p.business&&p.business.level>=2,kind:"business"},
 {id:"company-level4",title:"Serious Enterprise",description:"A Level 4 company unlocks major expansion opportunities.",req:p=>!!p.business&&p.business.level>=4,kind:"business"},
 {id:"property-owner",title:"Property Investor",description:"Owning property opens additional asset opportunities.",req:p=>p.properties.length>=1,kind:"money"},
