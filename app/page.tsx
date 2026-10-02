@@ -56,7 +56,7 @@ const properties:Property[]=[
 {name:"Mini rental house",type:"rental",price:2200000,value:2200000,income:22000,level:1,description:"A property that can generate weekly rental income."},
 {name:"Commercial shop",type:"rental",price:3000000,value:3000000,income:30000,level:1,description:"A shop you can rent out or eventually use for your own business."}
 ];
-const homes=[["Family home",0],["Shared apartment",8500],["Self-contained",18000],["1-bedroom",30000]];
+const homes:Array<[string,number]>=[["Family home",0],["Shared apartment",8500],["Self-contained",18000],["1-bedroom",30000]];
 const events=[["Your data finished.","You buy another bundle.",-4500,0,-3],["A friend needs help.","You lend them ₦10,000.",-10000,0,5],["Transport fare increased.","Getting around costs more today.",-3000,-5,-2],["Small win!","A client sends you a surprise tip.",12000,0,8],["Power outage.","You spend on a quick alternative.",-3500,-2,-4],["Someone recommends you.","A new contact could become useful.",0,0,6]] as const;
 const worldEvents=[
 {id:"neighbor-help",title:"Neighbour Needs Help",text:"A nearby business owner asks if you can help solve a small supply problem.",kind:"community",cash:8000,reputation:4,skills:2},
