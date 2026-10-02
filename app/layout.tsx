@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   description: "A Nigerian life simulation game where your choices shape your life.",
   applicationName: "OMO",
   manifest: "/manifest.webmanifest",
+  icons: { icon: "/icon.svg", apple: "/icon.svg" },
 };
 
 export const viewport: Viewport = {
